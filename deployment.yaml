@@ -15,7 +15,7 @@ repositories:
   dataset: stable-diffusion-repo
   mountPath: /opt/repos
   repositories:
-    - url: https://github.com/joshua-paperspace/ResNet-PyTorch
+    - url: https://github.com/joshua-paperspace/stable-diffusion-app
       name: repo
       ref: main
 resources:
