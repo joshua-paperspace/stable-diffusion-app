@@ -30,11 +30,14 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # MODEL_PATH = filepath
 
 pipe = joblib.load('/opt/models/pipeline-gpu.pkl')
+device = "cuda"
+pipe = pipe.to(device)
 
 st.title("Stable Diffusion Image Generator")
 
 st.text_input('Text prompt', key='prompt')
 # image = Image.open('bird.jpeg')
+
 
 
 
