@@ -29,7 +29,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 #         filepath = os.path.join(MODEL_DIR,filename)
 # MODEL_PATH = filepath
 
-pipe = joblib.load('pipeline-gpu.pkl')
+pipe = joblib.load('/opt/models/pipeline-gpu.pkl')
 
 st.title("Stable Diffusion Image Generator")
 

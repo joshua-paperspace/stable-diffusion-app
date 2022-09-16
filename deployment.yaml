@@ -5,6 +5,8 @@ command:
   - '-c'
   - |
     cd /opt/repos/repo
+    echo /opt/models
+    ls /opt/models/
     bash startup.sh
     pip install -r requirements.txt
     streamlit run app.py
