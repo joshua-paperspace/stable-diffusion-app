@@ -1,0 +1,4 @@
+streamlit
+msgpack 
+rich
+flax==0.5.0 --no-deps
