@@ -1,5 +1,5 @@
-from tkinter import DISABLED
-from turtle import onclick
+# from tkinter import DISABLED
+# from turtle import onclick
 import streamlit as st
 # import pandas as pd
 from PIL import Image

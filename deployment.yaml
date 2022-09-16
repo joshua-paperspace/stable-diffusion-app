@@ -9,10 +9,10 @@ command:
     pip install -r requirements.txt
     streamlit run app.py
 models:
-  - id: stable-diffusion-pipeline
+  - id: mo3uv7h4vnbbax
     path: /opt/models
 repositories:
-  dataset: stable-diffusion-repo
+  dataset: ds9oprlnw80r706
   mountPath: /opt/repos
   repositories:
     - url: https://github.com/joshua-paperspace/stable-diffusion-app
