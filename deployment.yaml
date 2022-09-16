@@ -1,0 +1,23 @@
+image: paperspace/gradient-base:pt112-tf29-jax0314-py39-20220803
+port: 8501
+command:
+  - /bin/sh
+  - '-c'
+  - |
+    cd /opt/repos/repo
+    bash startup.sh
+    pip install -r requirements.txt
+    streamlit run app.py
+models:
+  - id: stable-diffusion-pipeline
+    path: /opt/models
+repositories:
+  dataset: stable-diffusion-repo
+  mountPath: /opt/repos
+  repositories:
+    - url: https://github.com/joshua-paperspace/ResNet-PyTorch
+      name: repo
+      ref: main
+resources:
+  replicas: 1
+  instanceType: A4000
