@@ -7,6 +7,9 @@ from time import sleep
 import joblib
 import os
 
+import torch
+from torch import autocast
+
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 # !pip install --upgrade diffusers transformers scipy ftfy
@@ -49,7 +52,8 @@ st.text_input('Text prompt', key='prompt')
 
 def generate_image():
     prompt = st.session_state.prompt
-    image = pipe(prompt, guidance_scale=9.9, height=512, width=512,
+    with autocast("cuda"):
+        image = pipe(prompt, guidance_scale=9.9, height=512, width=512,
                        num_inference_steps=2, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
     # if prompt=='bird':
     #     image = Image.open('bird.jpeg')
@@ -86,3 +90,4 @@ if st.button("Generate"):
 #     prediction = classes[predicted]
 
 #     st.write(prediction)
+
