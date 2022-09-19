@@ -43,6 +43,32 @@ st.text_input('Text prompt', key='prompt')
 
 
 
+# import torch
+# from torch import autocast
+# from diffusers import StableDiffusionPipeline
+
+# model_id = "CompVis/stable-diffusion-v1-4"
+# device = "cuda"
+# pipe = StableDiffusionPipeline.from_pretrained(
+#     model_id, torch_dtype=torch.float16, revision="fp16", use_auth_token=True)
+# pipe = pipe.to(device)
+
+# import joblib
+# joblib.dump(pipe, 'pipeline.pkl', compress = 1)
+
+# sample_num = 1
+# lst = []
+# prompt = 'a corgi astronaut on mars'
+# for i in range(sample_num):
+#     with autocast("cuda"):
+#         a = lst.append(pipe(prompt, guidance_scale=7.5, height=512, width=512,
+#                        num_inference_steps=50, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0])
+#         lst.append(a)
+#         display(a)
+#         a.save(f'outputs/gen-image-{i}.png')
+
+
+
 
 
 # st.text_input("Your name", key="name")
@@ -53,8 +79,8 @@ st.text_input('Text prompt', key='prompt')
 def generate_image():
     prompt = st.session_state.prompt
     with autocast("cuda"):
-        image = pipe(prompt, guidance_scale=9.9, height=512, width=512,
-                       num_inference_steps=2, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
+        image = pipe(prompt, guidance_scale=7.5, height=512, width=512,
+                       num_inference_steps=50, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
     # if prompt=='bird':
     #     image = Image.open('bird.jpeg')
     # else: 
