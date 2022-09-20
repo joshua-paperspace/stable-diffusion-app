@@ -17,7 +17,7 @@ st.set_page_config(
     layout='wide'
 )
 
-@st.cache(hash_funcs={torch.nn.parameter.Parameter: lambda _: None})
+# @st.cache(hash_funcs={torch.nn.parameter.Parameter: lambda _: None})
 def get_pipeline():
     pipe = joblib.load('/opt/models/pipeline-gpu.pkl')
     device = "cuda"
