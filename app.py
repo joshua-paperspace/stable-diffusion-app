@@ -95,7 +95,7 @@ with cb:
         # else: 
         #     image_name = 'cat.jpeg'
 
-        image_name = 'generated_image.jpeg"'
+        image_name = 'generated_image.jpeg'
         # image = Image.open(image_name)
 
         from io import BytesIO
