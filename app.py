@@ -17,6 +17,32 @@ st.set_page_config(
     layout='wide'
 )
 
+@st.cache(hash_funcs={torch.nn.parameter.Parameter: lambda _: None})
+def get_pipeline():
+    pipe = joblib.load('/opt/models/pipeline-gpu.pkl')
+    device = "cuda"
+    pipe = pipe.to(device)
+    return pipe
+
+
+def generate_image():
+    prompt = st.session_state.prompt
+    with autocast("cuda"):
+        image = pipe(prompt, guidance_scale=7.5, height=512, width=512,
+                        num_inference_steps=50, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
+    # if prompt=='bird':
+    #     image_name = 'bird.jpeg'
+    # else: 
+    #     image_name = 'cat.jpeg'
+
+    image_name = 'generated_image.jpeg'
+    # image = Image.open(image_name)
+
+    buf = BytesIO()
+    image.save(buf, format="JPEG")
+    byte_im = buf.getvalue()
+    return image, byte_im, image_name, prompt
+
 def _max_width_():
     max_width_str = f"max-width: 4000px;"
     st.markdown(
@@ -32,6 +58,7 @@ def _max_width_():
 
 
 _max_width_()
+pipe = get_pipeline()
 
 ca, cb, cc = st.columns([1, 7, 1])
 with cb:
@@ -51,34 +78,6 @@ with cb:
     st.markdown("")
     st.markdown("## Generation Form")
 
-
-    @st.cache
-    def get_pipeline():
-        pipe = joblib.load('/opt/models/pipeline-gpu.pkl')
-        device = "cuda"
-        pipe = pipe.to(device)
-        return pipe
-
-
-    def generate_image():
-        prompt = st.session_state.prompt
-        with autocast("cuda"):
-            image = pipe(prompt, guidance_scale=7.5, height=512, width=512,
-                           num_inference_steps=50, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
-        # if prompt=='bird':
-        #     image_name = 'bird.jpeg'
-        # else: 
-        #     image_name = 'cat.jpeg'
-
-        image_name = 'generated_image.jpeg'
-        # image = Image.open(image_name)
-
-        buf = BytesIO()
-        image.save(buf, format="JPEG")
-        byte_im = buf.getvalue()
-        return image, byte_im, image_name, prompt
-
-pipe = get_pipeline()
 
 c1, c2, c3, c4 = st.columns([1, 3.5, 3.5, 1])
 with c2:
