@@ -27,9 +27,16 @@ def get_pipeline():
 
 def generate_image():
     prompt = st.session_state.prompt
+
+    size_mapping = {'Small': 256, 'Medium': 512, 'Large': 1024}
+    size = st.session_state.size
+    hw = size_mapping[size]
+
+    num_inference_steps = st.session_state.num_inference_steps
+
     with autocast("cuda"):
-        image = pipe(prompt, guidance_scale=7.5, height=512, width=512,
-                        num_inference_steps=50, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
+        image = pipe(prompt, guidance_scale=7.5, height=hw, width=hw,
+                        num_inference_steps=num_inference_steps, seed='random', scheduler='LMSDiscreteScheduler')["sample"][0]
     # if prompt=='bird':
     #     image_name = 'bird.jpeg'
     # else: 
@@ -85,14 +92,16 @@ with c2:
         
             size = st.radio(
                 "Choose image size",
-                ["Small", "Medium", "Large"])
+                ["Small", "Medium", "Large"],
+                key='size')
 
             num_inference_steps = st.slider(
                 "# of generation steps",
                 min_value=10,
                 max_value=100,
                 value=50,
-                help="You can choose the number of inference steps the model will take during image generation. Between 10 and 100, default number is 50.")
+                help="You can choose the number of inference steps the model will take during image generation. Between 10 and 100, default number is 50.",
+                key='num_inference_steps')
 
             submit_button = st.form_submit_button(label="Generate")
 
