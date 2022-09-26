@@ -115,7 +115,7 @@ c1, c2, c3, c4, c5 = st.columns([1, 5, .4, 1.6, 1])
 image, byte_im, image_name, prompt = generate_image()
 
 with c2:
-    st.image(image, caption=prompt, use_column_width=True)
+    st.image(image, caption="Prompt: " + prompt, use_column_width=True)
 with c4:
     btn = st.download_button(
         label="📥 Download Image",
@@ -123,4 +123,6 @@ with c4:
         file_name=image_name,
         mime="image/jpeg",
         )
+
+del image
 
